@@ -12,6 +12,7 @@
 		CDC4F9C41C60A5BE00825B8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CDC4F9C21C60A5BE00825B8A /* Main.storyboard */; };
 		CDC4F9C61C60A5BE00825B8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CDC4F9C51C60A5BE00825B8A /* Assets.xcassets */; };
 		CDC4F9C91C60A5BE00825B8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CDC4F9C71C60A5BE00825B8A /* LaunchScreen.storyboard */; };
+		CDC4F9D71C60B78800825B8A /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC4F9D61C60B78800825B8A /* APIController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		CDC4F9C51C60A5BE00825B8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CDC4F9C81C60A5BE00825B8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CDC4F9CA1C60A5BE00825B8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CDC4F9D61C60B78800825B8A /* APIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,12 +56,13 @@
 		CDC4F9BD1C60A5BE00825B8A /* UpcomingMovies */ = {
 			isa = PBXGroup;
 			children = (
+				CDC4F9D61C60B78800825B8A /* APIController.swift */,
 				CDC4F9BE1C60A5BE00825B8A /* AppDelegate.swift */,
-				CDC4F9C01C60A5BE00825B8A /* ViewController.swift */,
-				CDC4F9C21C60A5BE00825B8A /* Main.storyboard */,
 				CDC4F9C51C60A5BE00825B8A /* Assets.xcassets */,
-				CDC4F9C71C60A5BE00825B8A /* LaunchScreen.storyboard */,
 				CDC4F9CA1C60A5BE00825B8A /* Info.plist */,
+				CDC4F9C71C60A5BE00825B8A /* LaunchScreen.storyboard */,
+				CDC4F9C21C60A5BE00825B8A /* Main.storyboard */,
+				CDC4F9C01C60A5BE00825B8A /* ViewController.swift */,
 			);
 			path = UpcomingMovies;
 			sourceTree = "<group>";
@@ -137,6 +140,7 @@
 			files = (
 				CDC4F9C11C60A5BE00825B8A /* ViewController.swift in Sources */,
 				CDC4F9BF1C60A5BE00825B8A /* AppDelegate.swift in Sources */,
+				CDC4F9D71C60B78800825B8A /* APIController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +288,7 @@
 				CDC4F9CF1C60A5BE00825B8A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
