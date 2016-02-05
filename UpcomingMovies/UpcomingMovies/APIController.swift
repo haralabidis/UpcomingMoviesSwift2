@@ -8,15 +8,9 @@
 
 import Foundation
 
-enum JSONError: String, ErrorType {
-    case NoData = "ERROR: no data"
-    case ConversionFailed = "ERROR: conversion from JSON failed"
-}
-
-
 protocol APIControllerDelegate {
     func apiSucceededWithResults(results: NSArray)
-    func apiFailedWithError(error: JSONError)
+    func apiFailedWithError(error: String)
 }
 
 class APIController: NSObject {
@@ -34,13 +28,13 @@ class APIController: NSObject {
             do {
                 //Check that we have received data
                 guard let data = data else {
-                    self.delegate?.apiFailedWithError(JSONError.NoData)
+                    self.delegate?.apiFailedWithError("ERROR: no data")
                     return
                 }
                 //Call the JSON serialisation methdod to generate array of results.
                 self.generateResults(data)
             }
-        }.resume()
+            }.resume()
     }
     
     func generateResults(apiData: NSData)
@@ -50,7 +44,7 @@ class APIController: NSObject {
             let jsonResult = try NSJSONSerialization.JSONObjectWithData(apiData, options: .AllowFragments)
             //verify we can serialise the json object into a dictionary
             guard let jsonDictionary: NSDictionary = jsonResult as? NSDictionary else {
-                self.delegate?.apiFailedWithError(JSONError.ConversionFailed)
+                self.delegate?.apiFailedWithError("ERROR: conversion from JSON failed")
                 return
             }
             //Create an array of results
@@ -59,7 +53,7 @@ class APIController: NSObject {
             self.delegate?.apiSucceededWithResults(results)
         }
         catch {
-            self.delegate?.apiFailedWithError(JSONError.ConversionFailed)
+            self.delegate?.apiFailedWithError("ERROR: conversion from JSON failed")
         }
     }
     
