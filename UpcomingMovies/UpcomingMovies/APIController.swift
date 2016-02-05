@@ -16,7 +16,7 @@ enum JSONError: String, ErrorType {
 
 protocol APIControllerDelegate {
     func apiSucceededWithResults(results: NSArray)
-    func apiFailedWithError(error: JSONError)
+    func apiFailedWithError(error: String)
 }
 
 class APIController: NSObject {
@@ -34,7 +34,7 @@ class APIController: NSObject {
             do {
                 //Check that we have received data
                 guard let data = data else {
-                    self.delegate?.apiFailedWithError(JSONError.NoData)
+                    self.delegate?.apiFailedWithError(JSONError.NoData.rawValue)
                     return
                 }
                 //Call the JSON serialisation methdod to generate array of results.
@@ -50,7 +50,7 @@ class APIController: NSObject {
             let jsonResult = try NSJSONSerialization.JSONObjectWithData(apiData, options: .AllowFragments)
             //verify we can serialise the json object into a dictionary
             guard let jsonDictionary: NSDictionary = jsonResult as? NSDictionary else {
-                self.delegate?.apiFailedWithError(JSONError.ConversionFailed)
+                self.delegate?.apiFailedWithError(JSONError.ConversionFailed.rawValue)
                 return
             }
             //Create an array of results
@@ -59,7 +59,7 @@ class APIController: NSObject {
             self.delegate?.apiSucceededWithResults(results)
         }
         catch {
-            self.delegate?.apiFailedWithError(JSONError.ConversionFailed)
+            self.delegate?.apiFailedWithError(JSONError.ConversionFailed.rawValue)
         }
     }
     
