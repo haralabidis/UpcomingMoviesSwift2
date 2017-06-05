@@ -21,14 +21,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         getUpcomingMovies()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchResultsData.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier: String = "MovieResultsCell"
         
-        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)! as UITableViewCell
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)! as UITableViewCell
         
         //Create a variable that will contain the result data array item for each row
         let cellData: NSDictionary = self.searchResultsData[indexPath.row] as! NSDictionary
@@ -36,9 +36,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.textLabel!.text = cellData["title"] as? String
         
         // Construct the posterUrl to get an image URL for the movie thumbnail
-        let imgURL: NSURL = getPoster(cellData["poster_path"] as? String)
+        let imgURL: URL = getPoster(cellData["poster_path"] as? String)
         // Download an NSData representation of the image at the URL
-        let imgData: NSData = NSData(contentsOfURL: imgURL)!
+        let imgData: Data = try! Data(contentsOf: imgURL)
         cell.imageView!.image = UIImage(data: imgData)
 
         // Get the release date string for display in the subtitle
@@ -49,14 +49,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
-    func getPoster(posterPath: String?) ->NSURL
+    func getPoster(_ posterPath: String?) ->URL
     {
         guard let posterPath = posterPath,
             let baseUrl: String = "http://image.tmdb.org/t/p/w300",
             let urlString: String = "\(baseUrl)" + "\(posterPath)",
-            let imgURL: NSURL = NSURL(string: urlString)
+            let imgURL: URL = URL(string: urlString)
         else {
-            let defaultImageUrl: NSURL = NSURL(string: "https://assets.tmdb.org/images/logos/var_8_0_tmdb-logo-2_Bree.png")!
+            let defaultImageUrl: URL = URL(string: "https://assets.tmdb.org/images/logos/var_8_0_tmdb-logo-2_Bree.png")!
             return defaultImageUrl
         }
         return imgURL
@@ -78,15 +78,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     //Handle the Error
-    func apiFailedWithError(error: String) {
+    func apiFailedWithError(_ error: String) {
         let alertController = UIAlertController(title: "Error", message:
-            error, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+            error, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     //Handle the returned data
-    func apiSucceededWithResults(results: NSArray) {
+    func apiSucceededWithResults(_ results: NSArray) {
         self.searchResultsData = results
         self.appTableView.reloadData()
     }

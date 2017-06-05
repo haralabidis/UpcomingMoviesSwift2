@@ -9,22 +9,22 @@
 import Foundation
 
 protocol APIControllerDelegate {
-    func apiSucceededWithResults(results: NSArray)
-    func apiFailedWithError(error: String)
+    func apiSucceededWithResults(_ results: NSArray)
+    func apiFailedWithError(_ error: String)
 }
 
 class APIController: NSObject {
     
     var delegate:APIControllerDelegate?
     
-    func getAPIResults(urlString:String) {
+    func getAPIResults(_ urlString:String) {
         
         //The Url that will be called.
-        let url = NSURL(string: urlString)
+        let url = URL(string: urlString)
         //Create a request.
-        let request = NSMutableURLRequest(URL:url!)
+        let request = URLRequest(url:url!)
         //Sending Asynchronous request using NSURLSession.
-        NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
+        URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
             do {
                 //Check that we have received data
                 guard let data = data else {
@@ -34,14 +34,14 @@ class APIController: NSObject {
                 //Call the JSON serialisation methdod to generate array of results.
                 self.generateResults(data)
             }
-        }.resume()
+        }) .resume()
     }
     
-    func generateResults(apiData: NSData)
+    func generateResults(_ apiData: Data)
     {
         do {
             //Serialise the api data into a json object
-            let jsonResult = try NSJSONSerialization.JSONObjectWithData(apiData, options: .AllowFragments)
+            let jsonResult = try JSONSerialization.jsonObject(with: apiData, options: .allowFragments)
             //verify we can serialise the json object into a dictionary
             guard let jsonDictionary: NSDictionary = jsonResult as? NSDictionary else {
                 self.delegate?.apiFailedWithError("ERROR: conversion from JSON failed")
